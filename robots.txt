@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://finfreecalculator.com/sitemap.xml
