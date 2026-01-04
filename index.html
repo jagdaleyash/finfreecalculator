@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Free Financial Calculators | SIP, EMI, FD, PPF, EPF, Stocks</title>
+<meta name="description" content="Smart free online financial calculators for SIP, EMI, FD, PPF, EPF, and Stocks. Plan your investments, visualize growth, and compare options. Mobile-friendly, modern, and interactive.">
+<meta name="keywords" content="free financial calculators, SIP calculator, EMI calculator, FD calculator, PPF calculator, EPF calculator, stock calculator, investment planner">
+<meta name="robots" content="index, follow">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Smart Financial Calculators",
+  "url": "https://yourdomain.com",
+  "description": "Free online calculators for SIP, EMI, FD, PPF, EPF, and stocks. Plan investments easily with interactive charts."
+}
+</script>
+
+<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+
+<header>
+  <h1>Smart Free Financial Calculators</h1>
+  <p>Plan your investments and savings using our completely free calculators. Track growth, compare options, and make informed decisions.</p>
+</header>
+
+<div class="container controls">
+  <div class="toggle" id="themeToggle">🌙 Dark</div>
+</div>
+
+<div class="container grid">
+
+  <a href="emi.html" class="card-link">
+    <div class="card">
+      <h2>EMI Calculator</h2>
+      <p>Calculate EMIs for home, car, or bike loans with step-up and comparison charts.</p>
+    </div>
+  </a>
+
+  <a href="sip.html" class="card-link">
+    <div class="card">
+      <h2>SIP Calculator</h2>
+      <p>Plan systematic investments with step-up and compare SIP growth across different funds.</p>
+    </div>
+  </a>
+
+  <a href="fd.html" class="card-link">
+    <div class="card">
+      <h2>FD Calculator</h2>
+      <p>Compute Fixed Deposit maturity and interest quickly and easily.</p>
+    </div>
+  </a>
+
+  <a href="ppf.html" class="card-link">
+    <div class="card">
+      <h2>PPF Calculator</h2>
+      <p>Plan your long-term savings with a free Public Provident Fund calculator.</p>
+    </div>
+  </a>
+
+  <a href="epf.html" class="card-link">
+    <div class="card">
+      <h2>EPF Calculator</h2>
+      <p>Estimate your Employee Provident Fund balance and maturity in minutes.</p>
+    </div>
+  </a>
+
+  <a href="stock.html" class="card-link">
+    <div class="card">
+      <h2>Stock & Mutual Fund Calculator</h2>
+      <p>Visualize returns, predict growth, and compare stocks or mutual funds effectively.</p>
+    </div>
+  </a>
+
+</div>
+
+<footer>
+  Free financial calculators • Indicative results only • Investment returns may vary
+</footer>
+
+<script>
+const themeBtn = document.getElementById("themeToggle");
+themeBtn.onclick = () => {
+  const root = document.documentElement;
+  const dark = root.getAttribute("data-theme") === "dark";
+  root.setAttribute("data-theme", dark ? "" : "dark");
+  themeBtn.textContent = dark ? "🌙 Dark" : "☀️ Light";
+};
+</script>
+
+</body>
+</html>

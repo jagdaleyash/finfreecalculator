@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free Fixed Deposit Calculator | FD Interest & Maturity Calculator</title>
+
+<meta name="description" content="Free Fixed Deposit calculator to compute FD maturity amount, total interest earned, and investment value. Compare tenure and interest rates easily.">
+<meta name="keywords" content="free fd calculator, fixed deposit calculator india, fd interest calculator, bank fd returns">
+<meta name="robots" content="index, follow">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Free Fixed Deposit Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "description": "A free fixed deposit calculator to estimate interest earned and maturity amount for bank FDs."
+}
+</script>
+
+<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+
+<header>
+  <h1>Free Fixed Deposit Calculator</h1>
+  <p>Calculate FD maturity value and interest earned</p>
+</header>
+
+<div class="container controls">
+  <div class="toggle" id="themeToggle">🌙 Dark</div>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <label>Deposit Amount (₹)</label>
+    <input type="range" id="amountRange" min="1000" max="10000000" step="1000">
+    <input type="number" id="amountInput" value="500000">
+
+    <label>Annual Interest Rate (%)</label>
+    <input type="range" id="rateRange" min="3" max="9" step="0.1">
+    <input type="number" id="rateInput" value="6.5">
+
+    <label>Tenure (Years)</label>
+    <input type="range" id="yearsRange" min="1" max="20" step="1">
+    <input type="number" id="yearsInput" value="5">
+
+    <label>Compounding Frequency</label>
+    <select id="compoundSelect">
+      <option value="1">Yearly</option>
+      <option value="4" selected>Quarterly</option>
+      <option value="12">Monthly</option>
+    </select>
+
+    <div class="result" id="result"></div>
+
+    <!-- EDUCATIONAL CONTENT -->
+    <div class="info-box">
+      <h3>📘 FD Insights</h3>
+      <ul>
+        <li>Interest earned on FDs is <strong>fully taxable</strong> as per your income slab.</li>
+        <li>Senior citizens often get <strong>0.25%–0.75% higher FD rates</strong>.</li>
+        <li>Longer tenure does not always mean higher returns — rates change over time.</li>
+        <li>Consider <strong>tax-saving FDs</strong> (5-year lock-in) under Section 80C.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  Free calculator • Indicative returns • Tax rules may vary
+</footer>
+
+<script>
+/* ---------- DARK MODE ---------- */
+const themeBtn = document.getElementById("themeToggle");
+themeBtn.onclick = () => {
+  const root = document.documentElement;
+  const dark = root.getAttribute("data-theme") === "dark";
+  root.setAttribute("data-theme", dark ? "" : "dark");
+  themeBtn.textContent = dark ? "🌙 Dark" : "☀️ Light";
+};
+
+/* ---------- INPUTS ---------- */
+const amountR = document.getElementById("amountRange");
+const amountI = document.getElementById("amountInput");
+const rateR = document.getElementById("rateRange");
+const rateI = document.getElementById("rateInput");
+const yearR = document.getElementById("yearsRange");
+const yearI = document.getElementById("yearsInput");
+const compSel = document.getElementById("compoundSelect");
+
+const resultBox = document.getElementById("result");
+
+/* ---------- BIND ---------- */
+function bind(slider, input) {
+  slider.addEventListener("input", () => {
+    input.value = slider.value;
+    calculateFD();
+  });
+  input.addEventListener("input", () => {
+    slider.value = input.value;
+    calculateFD();
+  });
+}
+
+bind(amountR, amountI);
+bind(rateR, rateI);
+bind(yearR, yearI);
+compSel.addEventListener("change", calculateFD);
+
+/* ---------- FD CALCULATION ---------- */
+function calculateFD() {
+  const P = +amountI.value;
+  const r = +rateI.value / 100;
+  const t = +yearI.value;
+  const n = +compSel.value;
+
+  const maturity = P * Math.pow(1 + r / n, n * t);
+  const interest = maturity - P;
+
+  resultBox.innerHTML = `
+    Deposit Amount: ₹${P.toLocaleString("en-IN")}<br>
+    Interest Earned: ₹${Math.round(interest).toLocaleString("en-IN")}<br>
+    Maturity Amount: ₹${Math.round(maturity).toLocaleString("en-IN")}
+  `;
+}
+
+/* ---------- INIT ---------- */
+calculateFD();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free EPF Calculator | Employee Provident Fund Returns</title>
+
+<meta name="description" content="Free EPF calculator to estimate Employee Provident Fund maturity value, total contribution and retirement corpus using current EPF interest rate.">
+<meta name="robots" content="index, follow">
+
+<link rel="stylesheet" href="css/app.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>Free EPF Calculator</h1>
+  <p>Estimate your Employee Provident Fund retirement corpus</p>
+</header>
+
+<div class="container controls">
+  <div class="toggle" id="themeToggle">🌙 Dark</div>
+</div>
+
+<div class="container">
+<div class="card">
+
+<label>Monthly EPF Contribution (₹)</label>
+<input type="range" id="contRange" min="500" max="50000" step="500">
+<input type="number" id="contInput" value="5000">
+
+<label>Investment Duration (Years)</label>
+<input type="range" id="yearRange" min="1" max="40">
+<input type="number" id="yearInput" value="25">
+
+<label>EPF Interest Rate (%)</label>
+<input type="number" value="8.25" disabled>
+
+<div class="result" id="result"></div>
+<canvas id="epfChart"></canvas>
+
+<div class="info-box">
+<h3>🏦 EPF Facts</h3>
+<ul>
+<li>EPF interest is <strong>tax-free</strong> if held for 5+ years.</li>
+<li>Employer contribution does not reduce your salary in-hand.</li>
+<li>EPF is one of the safest retirement instruments in India.</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<footer>
+Free calculator • Government interest rates may change
+</footer>
+
+<script>
+themeToggle.onclick=()=>{document.documentElement.dataset.theme =
+document.documentElement.dataset.theme==="dark"?"":"dark"};
+
+function bind(r,i){r.oninput=()=>{i.value=r.value;calc()};
+i.oninput=()=>{r.value=i.value;calc()}}
+
+bind(contRange,contInput);
+bind(yearRange,yearInput);
+
+let chart;
+
+function calc(){
+const m=+contInput.value;
+const y=+yearInput.value;
+const r=8.25/100/12;
+
+let total=0,val=0,data=[];
+
+for(let yr=1;yr<=y;yr++){
+ for(let i=0;i<12;i++){
+  total+=m;
+  val=(val+m)*(1+r);
+ }
+ data.push(Math.round(val));
+}
+
+result.innerHTML=`
+Total Contribution: ₹${total.toLocaleString("en-IN")}<br>
+Interest Earned: ₹${Math.round(val-total).toLocaleString("en-IN")}<br>
+Maturity Value: ₹${Math.round(val).toLocaleString("en-IN")}
+`;
+
+if(chart) chart.destroy();
+chart=new Chart(epfChart,{
+type:"line",
+data:{labels:data.map((_,i)=>"Year "+(i+1)),
+datasets:[{label:"EPF Corpus",data:data,borderWidth:3,tension:.35}]}
+});
+}
+
+calc();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free Stock Investment Calculator | Long-Term Returns</title>
+
+<meta name="description" content="Free stock investment calculator. Estimate long-term stock returns with annual growth and optional additional investment.">
+
+<link rel="stylesheet" href="css/app.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>Free Stock Investment Calculator</h1>
+  <p>Estimate long-term equity investment growth</p>
+</header>
+
+<div class="container controls">
+  <div class="toggle" id="themeToggle">🌙 Dark</div>
+  <div class="toggle" id="compareToggle">📊 Compare</div>
+</div>
+
+<div class="container">
+<div class="card">
+
+<label>Initial Investment (₹)</label>
+<input type="range" id="amtRange" min="1000" max="10000000" step="1000">
+<input type="number" id="amtInput" value="500000">
+
+<label>Expected Annual Return (%)</label>
+<input type="range" id="rateRange" min="6" max="20" step="0.5">
+<input type="number" id="rateInput" value="12">
+
+<label>Investment Duration (Years)</label>
+<input type="range" id="yearRange" min="1" max="40">
+<input type="number" id="yearInput" value="15">
+
+<label>Annual Additional Investment (₹)</label>
+<input type="range" id="addRange" min="0" max="1000000" step="10000">
+<input type="number" id="addInput" value="50000">
+
+<div class="result" id="result"></div>
+<canvas id="stockChart"></canvas>
+
+<div class="info-box">
+<h3>📈 Stock Investing Tip</h3>
+<ul>
+<li>Long-term equity returns in India have averaged 11–14%.</li>
+<li>Holding stocks for over 1 year qualifies for LTCG taxation.</li>
+<li>Adding capital during market dips improves returns.</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<footer>
+Free calculator • Indicative only • Not investment advice
+</footer>
+
+<script>
+themeToggle.onclick=()=>{document.documentElement.dataset.theme =
+document.documentElement.dataset.theme==="dark"?"":"dark"};
+
+let compare=false;
+compareToggle.onclick=()=>{compare=!compare;calculate()};
+
+function bind(r,i){r.oninput=()=>{i.value=r.value;calculate()};
+i.oninput=()=>{r.value=i.value;calculate()}}
+
+bind(amtRange,amtInput);
+bind(rateRange,rateInput);
+bind(yearRange,yearInput);
+bind(addRange,addInput);
+
+let chart;
+
+function compute(additional){
+let val=+amtInput.value;
+const r=+rateInput.value/100;
+const y=+yearInput.value;
+let data=[val];
+
+for(let i=1;i<=y;i++){
+  val=(val+additional)*(1+r);
+  data.push(Math.round(val));
+}
+return data;
+}
+
+function calculate(){
+const base=compute(0);
+const add=compute(+addInput.value);
+
+result.innerHTML=`
+Initial Investment: ₹${amtInput.value.toLocaleString("en-IN")}<br>
+Final Value: ₹${add.at(-1).toLocaleString("en-IN")}
+`;
+
+if(chart) chart.destroy();
+chart=new Chart(stockChart,{
+type:"line",
+data:{
+labels:add.map((_,i)=>"Year "+i),
+datasets:[
+{label:"With Additional Investment",data:add,borderWidth:3},
+...(compare?[{label:"Without Additional Investment",data:base,borderDash:[6,6]}]:[])
+]
+}
+});
+}
+
+calculate();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free SIP Calculator with Step-Up | Mutual Fund Investment Planner</title>
+
+<meta name="description" content="Free SIP calculator with step-up option. Calculate mutual fund SIP returns, total investment, and wealth growth easily. Ideal for long-term investors and tax-saving planning.">
+
+<link rel="stylesheet" href="css/app.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>Free SIP Calculator</h1>
+  <p>Plan long-term wealth using systematic investment plans with step-up</p>
+</header>
+
+<!-- 🔹 ADD COMPARE TOGGLE -->
+<div class="container controls">
+  <div class="toggle" id="themeToggle">🌙 Dark</div>
+  <div class="toggle" id="compareToggle">📊 Compare</div>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <label>Monthly SIP Amount (₹)</label>
+    <input type="range" id="sipRange" min="500" max="200000" step="500">
+    <input type="number" id="sipInput" value="10000">
+
+    <label>Expected Annual Return (%)</label>
+    <input type="range" id="rateRange" min="6" max="18" step="0.5">
+    <input type="number" id="rateInput" value="12">
+
+    <label>Investment Duration (Years)</label>
+    <input type="range" id="yearsRange" min="1" max="40" step="1">
+    <input type="number" id="yearsInput" value="20">
+
+    <label>Annual SIP Step-Up (%)</label>
+    <input type="range" id="stepRange" min="0" max="20" step="1">
+    <input type="number" id="stepInput" value="10">
+
+    <div class="result" id="result"></div>
+
+    <canvas id="sipChart"></canvas>
+
+    <div class="info-box">
+      <h3>💡 Did You Know?</h3>
+      <ul>
+        <li>Step-up SIPs align with salary growth and inflation.</li>
+        <li>ELSS SIPs qualify for tax deduction under Section 80C.</li>
+        <li>Time in the market matters more than timing the market.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  Free calculator • Educational purpose only • Mutual funds are subject to market risks
+</footer>
+
+<script>
+/* ---------- DARK MODE ---------- */
+themeToggle.onclick = () => {
+  document.documentElement.dataset.theme =
+    document.documentElement.dataset.theme === "dark" ? "" : "dark";
+};
+
+/* ---------- INPUTS ---------- */
+const sipR = sipRange, sipI = sipInput;
+const rateR = rateRange, rateI = rateInput;
+const yearR = yearsRange, yearI = yearsInput;
+const stepR = stepRange, stepI = stepInput;
+
+let compare = false;
+compareToggle.onclick = () => { compare = !compare; calculateSIP(); };
+
+let sipChartInstance = null;
+
+function bind(r, i) {
+  r.oninput = () => { i.value = r.value; calculateSIP(); };
+  i.oninput = () => { r.value = i.value; calculateSIP(); };
+}
+bind(sipR, sipI); bind(rateR, rateI);
+bind(yearR, yearI); bind(stepR, stepI);
+
+/* ---------- SIP CALC ---------- */
+function compute(stepUpRate) {
+  let sip = +sipI.value;
+  const rate = +rateI.value / 100 / 12;
+  const years = +yearI.value;
+
+  let total = 0, value = 0, yearly = [];
+
+  for (let y = 1; y <= years; y++) {
+    for (let m = 0; m < 12; m++) {
+      total += sip;
+      value = (value + sip) * (1 + rate);
+    }
+    yearly.push(Math.round(value));
+    sip *= (1 + stepUpRate);
+  }
+  return { total, value, yearly };
+}
+
+function calculateSIP() {
+  const stepUp = +stepI.value / 100;
+
+  const stepUpData = compute(stepUp);
+  const normalData = compute(0);
+
+  result.innerHTML = `
+    Total Investment: ₹${stepUpData.total.toLocaleString("en-IN")}<br>
+    Total Gains: ₹${Math.round(stepUpData.value - stepUpData.total).toLocaleString("en-IN")}<br>
+    Final Corpus Value: ₹${Math.round(stepUpData.value).toLocaleString("en-IN")}
+  `;
+
+  if (sipChartInstance) sipChartInstance.destroy();
+
+  sipChartInstance = new Chart(sipChart, {
+    type: "line",
+    data: {
+      labels: stepUpData.yearly.map((_, i) => `Year ${i+1}`),
+      datasets: [
+        {
+          label: "Step-Up SIP",
+          data: stepUpData.yearly,
+          borderWidth: 3,
+          tension: 0.35
+        },
+        ...(compare ? [{
+          label: "Normal SIP",
+          data: normalData.yearly,
+          borderDash: [6,6],
+          borderWidth: 2
+        }] : [])
+      ]
+    },
+    options: { responsive: true }
+  });
+}
+
+calculateSIP();
+</script>
+
+</body>
+</html>

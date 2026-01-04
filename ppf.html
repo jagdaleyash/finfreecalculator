@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free PPF Calculator | Public Provident Fund Returns</title>
+
+<meta name="description" content="Free PPF calculator to compute Public Provident Fund maturity value, interest earned and total investment with current PPF interest rate.">
+<meta name="robots" content="index, follow">
+
+<link rel="stylesheet" href="css/app.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>Free PPF Calculator</h1>
+  <p>Calculate tax-free long-term savings with PPF</p>
+</header>
+
+<div class="container controls">
+  <div class="toggle" id="themeToggle">🌙 Dark</div>
+</div>
+
+<div class="container">
+<div class="card">
+
+<label>Annual Contribution (₹)</label>
+<input type="range" id="amtRange" min="500" max="150000" step="500">
+<input type="number" id="amtInput" value="150000">
+
+<label>Investment Duration (Years)</label>
+<input type="range" id="yearRange" min="15" max="30">
+<input type="number" id="yearInput" value="15">
+
+<label>PPF Interest Rate (%)</label>
+<input type="number" value="7.1" disabled>
+
+<div class="result" id="result"></div>
+<canvas id="ppfChart"></canvas>
+
+<div class="info-box">
+<h3>📘 PPF Tips</h3>
+<ul>
+<li>PPF offers <strong>EEE tax status</strong> (investment, interest, maturity all tax-free).</li>
+<li>Maximum yearly contribution allowed is ₹1.5 lakh.</li>
+<li>PPF account can be extended in 5-year blocks after maturity.</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<footer>
+Free calculator • Indicative returns • Government backed scheme
+</footer>
+
+<script>
+themeToggle.onclick=()=>{document.documentElement.dataset.theme =
+document.documentElement.dataset.theme==="dark"?"":"dark"};
+
+function bind(r,i){r.oninput=()=>{i.value=r.value;calc()};
+i.oninput=()=>{r.value=i.value;calc()}}
+
+bind(amtRange,amtInput);
+bind(yearRange,yearInput);
+
+let chart;
+
+function calc(){
+const A=+amtInput.value;
+const y=+yearInput.value;
+const r=7.1/100;
+
+let total=0,val=0,data=[];
+
+for(let i=1;i<=y;i++){
+ total+=A;
+ val=(val+A)*(1+r);
+ data.push(Math.round(val));
+}
+
+result.innerHTML=`
+Total Investment: ₹${total.toLocaleString("en-IN")}<br>
+Interest Earned: ₹${Math.round(val-total).toLocaleString("en-IN")}<br>
+Maturity Value: ₹${Math.round(val).toLocaleString("en-IN")}
+`;
+
+if(chart) chart.destroy();
+chart=new Chart(ppfChart,{
+type:"line",
+data:{labels:data.map((_,i)=>"Year "+(i+1)),
+datasets:[{label:"PPF Corpus",data:data,borderWidth:3,tension:.35}]}
+});
+}
+
+calc();
+</script>
+
+</body>
+</html>
