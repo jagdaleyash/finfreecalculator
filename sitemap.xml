@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://finfreecalculator.com/</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/index.html</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/emi.html</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/sip.html</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/stock.html</loc>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/fd.html</loc>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/ppf.html</loc>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/epf.html</loc>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/about.html</loc>
+    <priority>0.60</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/contact.html</loc>
+    <priority>0.60</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/privacy-policy.html</loc>
+    <priority>0.50</priority>
+  </url>
+
+  <url>
+    <loc>https://finfreecalculator.com/terms.html</loc>
+    <priority>0.50</priority>
+  </url>
+
+</urlset>
