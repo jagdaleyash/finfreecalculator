@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Free EMI Calculator | Loan EMI, Interest & Total Payment</title>
+<title>Free EMI Calculator | Calculate Loan EMI, Interest & Total Payment</title>
 
-<meta name="description" content="Free EMI calculator to calculate monthly loan EMI, total interest paid and total repayment amount. Ideal for home loan, car loan and personal loan planning.">
-<meta name="keywords" content="free EMI calculator, loan EMI calculator India, home loan EMI">
+<meta name="description" content="Use this free EMI calculator to calculate monthly loan EMI, total interest paid and total repayment amount. Ideal for home loan, car loan and personal loan planning in India.">
+<meta name="keywords" content="free EMI calculator India, loan EMI calculator, home loan EMI">
 <meta name="robots" content="index, follow">
 
 <link rel="stylesheet" href="css/app.css">
@@ -18,7 +18,7 @@
 
 <header>
   <h1>Free EMI Calculator</h1>
-  <p>Calculate monthly EMI, total interest & total loan cost</p>
+  <p>Calculate monthly EMI, total interest and total loan repayment</p>
 </header>
 
 <div class="container controls">
@@ -26,97 +26,137 @@
 </div>
 
 <div class="container">
-  <div class="card">
+<div class="card">
 
-    <label>Loan Amount (₹)</label>
-    <input type="range" id="loanRange" min="50000" max="10000000" step="50000">
-    <input type="number" id="loanInput" value="750000">
+<label>Loan Amount (₹)</label>
+<input type="range" id="loanRange" min="50000" max="10000000" step="50000">
+<input type="number" id="loanInput" value="750000">
 
-    <label>Annual Interest Rate (%)</label>
-    <input type="range" id="rateRange" min="5" max="20" step="0.1">
-    <input type="number" id="rateInput" value="8.5">
+<label>Annual Interest Rate (%)</label>
+<input type="range" id="rateRange" min="5" max="20" step="0.1">
+<input type="number" id="rateInput" value="8.5">
 
-    <label>Loan Tenure (Years)</label>
-    <input type="range" id="yearsRange" min="1" max="30" step="1">
-    <input type="number" id="yearsInput" value="4">
+<label>Loan Tenure (Years)</label>
+<input type="range" id="yearsRange" min="1" max="30" step="1">
+<input type="number" id="yearsInput" value="4">
 
-    <div class="result" id="result"></div>
+<div class="result" id="result"></div>
 
-    <canvas id="emiChart"></canvas>
+<div style="max-width:420px;margin:2rem auto">
+  <canvas id="emiChart" height="260"></canvas>
+</div>
 
-    <div class="info-box">
-      <h3>💡 Did You Know?</h3>
-      <ul>
-        <li>Even a 0.5% lower interest rate can save lakhs over long tenures.</li>
-        <li>Shorter loan tenure drastically reduces total interest paid.</li>
-        <li>Prepayments early in the loan period have maximum impact.</li>
-      </ul>
-    </div>
+</div>
+</div>
 
-  </div>
+<!-- ================= CONTENT ================= -->
+
+<div class="container">
+
+<section class="card" style="margin-top:3rem">
+<h2>What is EMI?</h2>
+<p>
+EMI stands for <strong>Equated Monthly Installment</strong>.
+It is the fixed payment amount made by a borrower to repay a loan over a specified period.
+Each EMI consists of two components: principal repayment and interest payment.
+</p>
+<p>
+In the initial years of a loan, a larger portion of the EMI goes towards interest.
+As the loan progresses, the principal component increases while interest decreases.
+</p>
+</section>
+
+<section class="card" style="margin-top:3rem">
+<h2>How EMI is Calculated</h2>
+<p>
+Banks and financial institutions calculate EMI using a standard formula that considers
+loan amount, interest rate and tenure.
+</p>
+<p>
+Longer tenures reduce EMI but increase total interest paid.
+Shorter tenures increase EMI but significantly reduce overall loan cost.
+</p>
+</section>
+
+<section class="card" style="margin-top:3rem">
+<h2>Types of Loans That Use EMI</h2>
+<ul>
+<li>Home loans</li>
+<li>Car loans</li>
+<li>Personal loans</li>
+<li>Education loans</li>
+<li>Business loans</li>
+</ul>
+</section>
+
+<section class="card" style="margin-top:3rem">
+<h2>Tips to Reduce EMI and Interest Burden</h2>
+<ul>
+<li>Choose the shortest affordable tenure</li>
+<li>Compare interest rates across lenders</li>
+<li>Make prepayments early in the loan tenure</li>
+<li>Maintain a good credit score</li>
+</ul>
+</section>
+
+<section class="card" style="margin-top:3rem">
+<h2>Frequently Asked Questions</h2>
+
+<h3>Is EMI the same every month?</h3>
+<p>Yes, for fixed-rate loans EMI remains constant throughout the tenure.</p>
+
+<h3>Does prepayment reduce EMI?</h3>
+<p>Prepayment reduces either tenure or EMI depending on lender terms.</p>
+
+<h3>Is this EMI calculator free?</h3>
+<p>Yes. This calculator is completely free and requires no registration.</p>
+</section>
+
 </div>
 
 <footer>
-  Free calculator • Educational use only
+Free calculator • Educational use only
 </footer>
 
 <script>
-/* ---------- DARK MODE ---------- */
-const themeBtn = document.getElementById("themeToggle");
-themeBtn.onclick = () => {
-  const root = document.documentElement;
-  const dark = root.getAttribute("data-theme") === "dark";
-  root.setAttribute("data-theme", dark ? "" : "dark");
-  themeBtn.textContent = dark ? "🌙 Dark" : "☀️ Light";
-};
+const themeBtn=document.getElementById("themeToggle");
+themeBtn.onclick=()=>{const r=document.documentElement;
+const d=r.getAttribute("data-theme")==="dark";
+r.setAttribute("data-theme",d?"":"dark");
+themeBtn.textContent=d?"🌙 Dark":"☀️ Light";};
 
-/* ---------- INPUTS ---------- */
-const loanR = loanRange, loanI = loanInput;
-const rateR = rateRange, rateI = rateInput;
-const yearR = yearsRange, yearI = yearsInput;
-
+const loanR=loanRange,loanI=loanInput;
+const rateR=rateRange,rateI=rateInput;
+const yearR=yearsRange,yearI=yearsInput;
 let chart;
 
-/* ---------- BIND ---------- */
-function bind(slider, input) {
-  slider.oninput = () => { input.value = slider.value; calculate(); };
-  input.oninput = () => { slider.value = input.value; calculate(); };
+function bind(s,i){s.oninput=()=>{i.value=s.value;calc()};
+i.oninput=()=>{s.value=i.value;calc()}}
+bind(loanR,loanI);bind(rateR,rateI);bind(yearR,yearI);
+
+function calc(){
+const P=+loanI.value;
+const r=(+rateI.value/100)/12;
+const n=+yearI.value*12;
+const emi=(P*r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
+const total=emi*n;
+const interest=total-P;
+
+result.innerHTML=`
+Monthly EMI: ₹${Math.round(emi).toLocaleString("en-IN")}<br>
+Total Interest: ₹${Math.round(interest).toLocaleString("en-IN")}<br>
+Total Amount Paid: ₹${Math.round(total).toLocaleString("en-IN")}
+`;
+
+if(chart)chart.destroy();
+chart=new Chart(emiChart,{
+type:"pie",
+data:{labels:["Principal","Interest"],
+datasets:[{data:[P,interest]}]},
+options:{plugins:{legend:{position:"bottom"}}}
+});
 }
-
-bind(loanR, loanI);
-bind(rateR, rateI);
-bind(yearR, yearI);
-
-/* ---------- EMI LOGIC ---------- */
-function calculate() {
-  const P = +loanI.value;
-  const r = (+rateI.value / 100) / 12;
-  const n = +yearI.value * 12;
-
-  const emi = (P * r * Math.pow(1+r, n)) / (Math.pow(1+r, n) - 1);
-  const total = emi * n;
-  const interest = total - P;
-
-  result.innerHTML = `
-    Monthly EMI: ₹${Math.round(emi).toLocaleString("en-IN")}<br>
-    Total Interest: ₹${Math.round(interest).toLocaleString("en-IN")}<br>
-    Total Amount Paid: ₹${Math.round(total).toLocaleString("en-IN")}
-  `;
-
-  if (chart) chart.destroy();
-
-  chart = new Chart(emiChart, {
-    type: "pie",
-    data: {
-      labels: ["Principal", "Interest"],
-      datasets: [{
-        data: [P, interest]
-      }]
-    }
-  });
-}
-
-calculate();
+calc();
 </script>
 
 </body>
