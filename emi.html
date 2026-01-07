@@ -4,201 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Free EMI Calculator | Home, Car & Bike Loans</title>
-<meta name="description" content="Free EMI calculator for home, car, and bike loans. Calculate monthly EMI, total interest, and total amount with realistic step-up and comparison charts. Mobile-friendly and easy to use.">
-<meta name="keywords" content="free EMI calculator, home loan EMI, car loan EMI, bike loan EMI, step-up EMI, loan planner">
-<meta name="robots" content="index, follow">
+<title>Free EMI Calculator – Loan EMI, Interest & Total Payment</title>
 
+<meta name="description" content="Free EMI calculator to compute monthly loan EMI, total interest paid and total repayment amount. Ideal for home loans, personal loans and car loans in India.">
+<meta name="keywords" content="free EMI calculator, loan EMI calculator India, home loan EMI, personal loan EMI">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://finfreecalculator.com/emi.html">
+
+<!-- Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "Free EMI Calculator",
-  "operatingSystem": "Web",
   "applicationCategory": "FinanceApplication",
-  "url": "https://yourdomain.com/emi.html",
-  "description": "Free online EMI calculator to compute monthly EMIs for home, car, and bike loans. Plan payments easily with realistic step-up and comparison charts."
+  "operatingSystem": "Web",
+  "description": "A free EMI calculator to estimate monthly EMI, total interest and total loan repayment."
 }
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-XXXXXXX');
-</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9583473478748386"
-     crossorigin="anonymous"></script>
+
 <link rel="stylesheet" href="css/app.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <header>
   <h1>Free EMI Calculator</h1>
-  <p>Calculate EMIs for home, car, or bike loans. Compare normal vs step-up EMIs. Completely free to use.</p>
+  <p>Calculate loan EMI, total interest & repayment amount accurately</p>
 </header>
 
-<div class="container controls">
-  <div class="toggle" id="themeToggle">🌙 Dark</div>
-  <div class="toggle" id="compareToggle">📊 Compare</div>
+<main class="container">
+
+<div class="card">
+
+  <label>Loan Amount (₹)</label>
+  <input type="range" id="loanRange" min="50000" max="5000000" step="50000">
+  <input type="number" id="loanInput" value="750000">
+
+  <label>Annual Interest Rate (%)</label>
+  <input type="range" id="rateRange" min="5" max="20" step="0.1">
+  <input type="number" id="rateInput" value="8.5">
+
+  <label>Loan Tenure (Years)</label>
+  <input type="range" id="yearsRange" min="1" max="30" step="1">
+  <input type="number" id="yearsInput" value="4">
+
+  <div class="result" id="result"></div>
+
 </div>
 
-<div class="container">
-  <div class="card">
-
-    <label>Loan Amount (₹)</label>
-    <input type="range" id="loanRange" min="50000" max="10000000" step="50000">
-    <input type="number" id="loanInput" value="500000">
-
-    <label>Annual Interest Rate (%)</label>
-    <input type="number" id="rateInput" value="8.5" readonly>
-
-    <label>Loan Tenure (Years)</label>
-    <input type="range" id="yearsRange" min="1" max="30" step="1">
-    <input type="number" id="yearsInput" value="10">
-
-    <label>Annual Step-Up in EMI (%)</label>
-    <input type="range" id="stepRange" min="0" max="20" step="0.5">
-    <input type="number" id="stepInput" value="0">
-
-    <div class="result" id="result"></div>
-    <canvas id="emiChart"></canvas>
-
-    <p style="margin-top:1rem; font-size:.9rem; color:var(--muted)">
-      Step-Up EMI increases your monthly payment gradually each year. As a result, total interest paid may increase slightly compared to a fixed EMI, but it can help manage cash flow and match salary growth. Results are indicative only.
-    </p>
-
-  </div>
+<!-- EDUCATIONAL CONTENT -->
+<div class="card info-box">
+  <h3>💡 Loan Planning Tips</h3>
+  <ul>
+    <li>Lower interest rates reduce EMI **and** total interest significantly.</li>
+    <li>Shorter tenure = higher EMI but much lower total interest paid.</li>
+    <li>Prepayments early in the loan period reduce interest the most.</li>
+    <li>EMI should ideally not exceed <strong>30–40%</strong> of monthly income.</li>
+  </ul>
 </div>
 
-<footer>
-  Free calculator • Indicative results only • Loan EMI may vary by bank policies
-  <p>
-    © 2026 FinFreeCalculator • Free Financial Calculators |
-    <a href="about.html">About</a> |
-    <a href="contact.html">Contact</a> |
-    <a href="privacy-policy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms</a>
-  </p>
-</footer>
-
-<script>
-/* ---------- DARK MODE ---------- */
-const themeBtn = document.getElementById("themeToggle");
-themeBtn.onclick = () => {
-  const root = document.documentElement;
-  const dark = root.getAttribute("data-theme") === "dark";
-  root.setAttribute("data-theme", dark ? "" : "dark");
-  themeBtn.textContent = dark ? "🌙 Dark" : "☀️ Light";
-};
-
-/* ---------- INPUT REFERENCES ---------- */
-const loanR = document.getElementById("loanRange");
-const loanI = document.getElementById("loanInput");
-const rateI = document.getElementById("rateInput"); // fixed
-const yearR = document.getElementById("yearsRange");
-const yearI = document.getElementById("yearsInput");
-const stepR = document.getElementById("stepRange");
-const stepI = document.getElementById("stepInput");
-
-const compareBtn = document.getElementById("compareToggle");
-const resultBox = document.getElementById("result");
-const chartCanvas = document.getElementById("emiChart");
-
-let compare = false;
-let emiChartInstance = null;
-
-/* ---------- TWO-WAY BINDING ---------- */
-function bindSliderAndInput(slider, input) {
-  slider.addEventListener("input", () => {
-    input.value = slider.value;
-    calculateEMI();
-  });
-  input.addEventListener("input", () => {
-    slider.value = input.value;
-    calculateEMI();
-  });
-}
-
-/* Bind all editable inputs */
-bindSliderAndInput(loanR, loanI);
-bindSliderAndInput(yearR, yearI);
-bindSliderAndInput(stepR, stepI);
-
-/* ---------- TOGGLES ---------- */
-compareBtn.onclick = () => {
-  compare = !compare;
-  calculateEMI();
-};
-
-/* ---------- EMI CALCULATION ---------- */
-function calculateEMI() {
-  const principal = +loanI.value;
-  const annualRate = +rateI.value;
-  const years = +yearI.value;
-  const stepUpRate = +stepI.value / 100;
-
-  const months = years * 12;
-  const monthlyRate = annualRate / 12 / 100;
-
-  // Base monthly EMI (without step-up)
-  const baseEMI = principal * monthlyRate * Math.pow(1 + monthlyRate, months) /
-                  (Math.pow(1 + monthlyRate, months) - 1);
-
-  let totalPaid = 0;
-  let emiData = [];
-  let currentEMI = baseEMI;
-
-  for (let y = 1; y <= years; y++) {
-    for (let m = 0; m < 12; m++) {
-      emiData.push(Math.round(currentEMI));
-      totalPaid += currentEMI;
-    }
-    // Apply step-up for next year
-    currentEMI *= (1 + stepUpRate);
-  }
-
-  const totalInterest = totalPaid - principal;
-
-  resultBox.innerHTML = `
-    Monthly EMI (Year 1): ₹${Math.round(baseEMI).toLocaleString("en-IN")}<br>
-    Total Interest Paid: ₹${Math.round(totalInterest).toLocaleString("en-IN")}<br>
-    Total Amount Paid: ₹${Math.round(totalPaid).toLocaleString("en-IN")}
-  `;
-
-  if (emiChartInstance) emiChartInstance.destroy();
-
-  emiChartInstance = new Chart(chartCanvas, {
-    type: 'line',
-    data: {
-      labels: emiData.map((_, i) => `Month ${i+1}`),
-      datasets: [
-        {
-          label: 'EMI Over Time',
-          data: emiData,
-          borderWidth: 3,
-          tension: 0.35
-        },
-        ...(compare ? [{
-          label: 'Normal EMI (Fixed)',
-          data: Array(months).fill(Math.round(baseEMI)),
-          borderDash: [6,6],
-          borderWidth: 2
-        }] : [])
-      ]
-    },
-    options: { responsive: true }
-  });
-}
-
-/* ---------- INIT ---------- */
-calculateEMI();
-</script>
-
-</body>
-</html>
-
-
-
+<!-- SEO CONTENT -->
+<
